@@ -16,6 +16,7 @@ export default function OrderEntry() {
 
   return (
     <div className="page-container">
+      <h1 className="text-center text-5xl mb-8">Sundaes on Demand</h1>
       <Options optionType={OptionType.Scoops} />
       <Options optionType={OptionType.Toppings} />
       <h1 className="text-center mb-8">

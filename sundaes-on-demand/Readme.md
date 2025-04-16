@@ -1,8 +1,8 @@
 # Sundaes-on-demand
 
-A project created to practice React, Typescript, and testing with Vitest.
+An ice-cream flavoured app focused on learning to test with Vitest and getting some more React+TS and Tailwind practice. Had this [course](https://www.udemy.com/course/react-testing-library/) as a starting point.
 
-## Changes from the Course Version
+## Changes from the course
 
 - Switched from JavaScript to TypeScript.
 - Replaced React Bootstrap components with custom-built ones.
@@ -14,5 +14,6 @@ A project created to practice React, Typescript, and testing with Vitest.
 ## How to Run
 
 1. Download this folder.
-2. Navigate to the project folder and run "npm install".
+2. Navigate to the project folder and run `npm install`.
 3. Make sure the backend is running in the background. Instructions on how to do that can be found [here](https://github.com/bonnie/udemy-TESTING-LIBRARY/tree/main/sundae-server).
+4. Run `npm run dev`.
