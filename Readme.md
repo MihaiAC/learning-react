@@ -1,9 +1,15 @@
 # Learning React
 
-Folder contents:
+## Projects
 
-- [React complete guide](./react_complete_guide/) - following the course with the same name, going through most React features.
-- [Next JS tutorial](./next_js_tutorial)
-- [Testing React](./testing_react_vitest/) - React + TS + testing with Vitest practice
-- [Typescript tutorial](./typescript_tutorial/) - Short TS Freecodecamp tutorial.
-- Bash script to remove node_modules.
+- [**Sundaes On Demand**](./sundaes-on-demand/)
+  Testing-focused React + TS + Tailwind app.
+
+- [**React Three Fiber Tutorial**](./three_fiber_tutorial/)
+  Crossy Road clone tutorial, with some extra refactoring and gameplay tweaks.
+
+- [**React Complete Guide**](./react_complete_guide/)
+  Covers React fundamentals, common libraries (Redux, Router, Query, Motion), and a short Next.js intro.
+
+- [**TypeScript Tutorial**](./typescript_tutorial/)
+  TypeScript short tutorial.
