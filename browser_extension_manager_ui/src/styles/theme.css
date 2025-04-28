@@ -23,22 +23,6 @@
     --dark-gradient-from: #040918;
     --dark-gradient-to: #091540;
   }
-
-  .bg-light-gradient {
-    background-image: linear-gradient(
-      180deg,
-      var(--light-gradient-from) 0%,
-      var(--light-gradient-to) 100%
-    );
-  }
-
-  .bg-dark-gradient {
-    background-image: linear-gradient(
-      180deg,
-      var(--dark-gradient-from) 0%,
-      var(--dark-gradient-to) 100%
-    );
-  }
 }
 
 @plugin "daisyui/theme" {
@@ -70,6 +54,26 @@
   --color-accent: hsl(3, 86%, 64%);
   --color-accent-content: hsl(200, 60%, 99%);
   --color-neutral: hsl(226, 11%, 37%);
+}
+
+[data-theme="my-light-theme"] {
+  --gradient-from: #ebf2fc;
+  --gradient-to: #eef8f9;
+}
+
+[data-theme="my-dark-theme"] {
+  --gradient-from: #040918;
+  --gradient-to: #091540;
+}
+
+@layer base {
+  .gradient-bg {
+    background-image: linear-gradient(
+      180deg,
+      var(--gradient-from) 0%,
+      var(--gradient-to) 100%
+    );
+  }
 }
 
 /* Font face declaration for variable font files */
