@@ -13,8 +13,8 @@ export default function Card({ card, displayState, removeSelf }) {
   }
 
   return (
-    <div>
-      <img src={card.logo} alt={card.name} />
+    <div className="card">
+      <img className="w-16 h-16" src={card.logo} alt={card.name} />
       <h3>{card.name}</h3>
       <p>{card.description}</p>
       <button onClick={() => removeSelf()}>Remove</button>

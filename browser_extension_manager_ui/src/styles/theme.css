@@ -26,11 +26,8 @@
 }
 
 @plugin "daisyui/theme" {
-  name: "my-light-theme";
-  default: true;
-  prefersdark: false;
+  name: my-light-theme;
   color-scheme: light;
-
   --color-primary: hsl(200, 60%, 99%);
   --color-primary-content: hsl(227, 75%, 14%);
   --color-secondary: hsl(200, 60%, 99%);
@@ -38,15 +35,13 @@
   --color-accent: hsl(3, 77%, 44%);
   --color-accent-content: hsl(227, 75%, 14%);
   --color-neutral: hsl(0, 0%, 78%);
+  --color-neutral-content: hsl(227, 75%, 14%);
+  --color-base-content: hsl(227, 75%, 14%);
 }
 
-/* Define a custom dark theme */
 @plugin "daisyui/theme" {
-  name: "my-dark-theme";
-  default: false;
-  prefersdark: true;
+  name: my-dark-theme;
   color-scheme: dark;
-
   --color-primary: hsl(226, 25%, 17%);
   --color-primary-content: hsl(0, 0%, 93%);
   --color-secondary: hsl(225, 23%, 24%);
@@ -54,6 +49,8 @@
   --color-accent: hsl(3, 86%, 64%);
   --color-accent-content: hsl(200, 60%, 99%);
   --color-neutral: hsl(226, 11%, 37%);
+  --color-neutral-content: hsl(0, 0%, 93%);
+  --color-base-content: hsl(0, 0%, 93%);
 }
 
 [data-theme="my-light-theme"] {

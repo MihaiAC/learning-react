@@ -4,6 +4,7 @@ import { DisplayState } from "./data/DisplayState";
 import data from "./data/data.json";
 import Card from "./components/Card";
 import { useTheme } from "./ui/hooks/useTheme";
+import { ToggleButton } from "./ui/ToggleButton";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -24,23 +25,46 @@ function App() {
   }
 
   return (
-    <div className={"min-h-screen w-full gradient-bg"}>
-      <button onClick={() => setDisplayState(DisplayState.all)}>All</button>
-      <button onClick={() => setDisplayState(DisplayState.active)}>
-        Active
-      </button>
-      <button onClick={() => setDisplayState(DisplayState.inactive)}>
-        Inactive
-      </button>
+    <div className="min-h-screen w-full gradient-bg">
+      <div className="container mx-auto">
+        <section id="header">
+          <div className="flex flex-row justify-between w-full bg-primary rounded-xl p-2">
+            <div className="flex items-center gap-2">
+              <img
+                src="assets/images/logo.svg"
+                alt="Company logo"
+                className="h-8 w-8"
+              />
+              <h1 className="font-bold text-xl">Extensions</h1>
+            </div>
 
-      {cards.map((card) => (
-        <Card
-          key={card.id}
-          card={card}
-          displayState={displayState}
-          removeSelf={() => removeCard(card.id)}
-        />
-      ))}
+            <ToggleButton />
+          </div>
+        </section>
+        <section id="cards">
+          <div id="display-controls"></div>
+          <div id="cards">
+            <button onClick={() => setDisplayState(DisplayState.all)}>
+              All
+            </button>
+            <button onClick={() => setDisplayState(DisplayState.active)}>
+              Active
+            </button>
+            <button onClick={() => setDisplayState(DisplayState.inactive)}>
+              Inactive
+            </button>
+
+            {cards.map((card) => (
+              <Card
+                key={card.id}
+                card={card}
+                displayState={displayState}
+                removeSelf={() => removeCard(card.id)}
+              />
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
