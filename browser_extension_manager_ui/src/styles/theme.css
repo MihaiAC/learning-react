@@ -1,0 +1,84 @@
+@layer base {
+  :root {
+    /* Neutral colors */
+    --neutral-900: hsl(227, 75%, 14%);
+    --neutral-800: hsl(226, 25%, 17%);
+    --neutral-700: hsl(225, 23%, 24%);
+    --neutral-600: hsl(226, 11%, 37%);
+    --neutral-300: hsl(0, 0%, 78%);
+    --neutral-200: hsl(217, 61%, 90%);
+    --neutral-100: hsl(0, 0%, 93%);
+    --neutral-0: hsl(200, 60%, 99%);
+
+    /* Red colors */
+    --red-400: hsl(3, 86%, 64%);
+    --red-500: hsl(3, 71%, 56%);
+    --red-700: hsl(3, 77%, 44%);
+
+    /* Gradient colors */
+    --light-gradient-from: #ebf2fc;
+    --light-gradient-to: #eef8f9;
+    --dark-gradient-from: #040918;
+    --dark-gradient-to: #091540;
+  }
+
+  .bg-light-gradient {
+    background-image: linear-gradient(
+      180deg,
+      var(--light-gradient-from) 0%,
+      var(--light-gradient-to) 100%
+    );
+  }
+
+  .bg-dark-gradient {
+    background-image: linear-gradient(
+      180deg,
+      var(--dark-gradient-from) 0%,
+      var(--dark-gradient-to) 100%
+    );
+  }
+}
+
+/* Font face declaration for variable font files */
+@font-face {
+  font-family: "Noto Sans";
+  src: url("/assets/fonts/NotoSans-VariableFont_wdth,wght.ttf")
+    format("truetype-variations");
+  font-weight: 100 900; /* Full range of weights */
+  font-stretch: 75% 125%; /* Width variation range */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("/assets/fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf")
+    format("truetype-variations");
+  font-weight: 100 900; /* Full range of weights */
+  font-stretch: 75% 125%; /* Width variation range */
+  font-style: italic;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  /* Adding utility classes for your specific font weights */
+  .font-normal {
+    font-weight: 400;
+  }
+
+  .font-medium {
+    font-weight: 500;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+}
