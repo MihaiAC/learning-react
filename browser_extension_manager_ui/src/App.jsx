@@ -36,7 +36,7 @@ function App() {
           key={card.id}
           card={card}
           displayState={displayState}
-          removeCard={removeCard}
+          removeSelf={() => removeCard(card.id)}
         />
       ))}
     </div>

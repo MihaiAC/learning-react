@@ -17,10 +17,7 @@ export default function Card({ card, displayState, removeSelf }) {
       <img src={card.logo} alt={card.name} />
       <h3>{card.name}</h3>
       <p>{card.description}</p>
-      <button onClick={() => setIsActive((active) => !active)}>
-        {isActive ? "Set inactive" : "Set active"}
-      </button>
-      <button onClick={() => removeSelf(card.id)}>Remove</button>
+      <button onClick={() => removeSelf()}>Remove</button>
     </div>
   );
 }

@@ -1,14 +1,16 @@
 @layer base {
   :root {
-    /* Neutral colors */
-    --neutral-900: hsl(227, 75%, 14%);
-    --neutral-800: hsl(226, 25%, 17%);
-    --neutral-700: hsl(225, 23%, 24%);
-    --neutral-600: hsl(226, 11%, 37%);
-    --neutral-300: hsl(0, 0%, 78%);
-    --neutral-200: hsl(217, 61%, 90%);
-    --neutral-100: hsl(0, 0%, 93%);
-    --neutral-0: hsl(200, 60%, 99%);
+    /* Neutral colors dark mode */
+    --dark-blue: hsl(227, 75%, 14%);
+    --dark-grayishBlue: hsl(226, 25%, 17%);
+    --lighter-grayishBlue: hsl(225, 23%, 24%);
+    --light-gray: hsl(226, 11%, 37%);
+
+    /* Neutral colors dark mode */
+    --white-gray: hsl(0, 0%, 78%);
+    --white-grayishBlue: hsl(217, 61%, 90%);
+    --slightly-grayWhite: hsl(0, 0%, 93%);
+    --not-quiteWhite: hsl(200, 60%, 99%);
 
     /* Red colors */
     --red-400: hsl(3, 86%, 64%);
@@ -37,6 +39,37 @@
       var(--dark-gradient-to) 100%
     );
   }
+}
+
+@plugin "daisyui/theme" {
+  name: "my-light-theme";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-primary: hsl(200, 60%, 99%);
+  --color-primary-content: hsl(227, 75%, 14%);
+  --color-secondary: hsl(200, 60%, 99%);
+  --color-secondary-content: hsl(227, 75%, 14%);
+  --color-accent: hsl(3, 77%, 44%);
+  --color-accent-content: hsl(227, 75%, 14%);
+  --color-neutral: hsl(0, 0%, 78%);
+}
+
+/* Define a custom dark theme */
+@plugin "daisyui/theme" {
+  name: "my-dark-theme";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-primary: hsl(226, 25%, 17%);
+  --color-primary-content: hsl(0, 0%, 93%);
+  --color-secondary: hsl(225, 23%, 24%);
+  --color-secondary-content: hsl(200, 60%, 99%);
+  --color-accent: hsl(3, 86%, 64%);
+  --color-accent-content: hsl(200, 60%, 99%);
+  --color-neutral: hsl(226, 11%, 37%);
 }
 
 /* Font face declaration for variable font files */
