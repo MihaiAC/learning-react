@@ -24,12 +24,23 @@ export default function Card({ card, displayState, removeSelf }) {
 
       <div className="flex items-center">
         <button onClick={() => removeSelf()}>Remove</button>
-        <input
-          type="checkbox"
-          defaultChecked={isActive}
-          className="toggle toggle-primary w-1/2 h-1/2"
-          onChange={(e) => setIsActive(e.target.checked)}
-        />
+
+        {/* Plain-Tailwind toggle, thumb as sibling */}
+        <label className="relative inline-flex items-center cursor-pointer ml-4">
+          {/* Hidden checkbox */}
+          <input
+            type="checkbox"
+            checked={isActive}
+            onChange={(e) => setIsActive(e.target.checked)}
+            className="sr-only peer"
+          />
+
+          {/* Track */}
+          <div className="w-11 h-6 bg-gray-300 rounded-full transition-colors duration-200 peer-checked:bg-accent peer-focus:ring-2 peer-focus:ring-accent border-2 border-secondary peer-focus:border-2 peer-focus:border-primary" />
+
+          {/* Thumb */}
+          <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 peer-checked:translate-x-5" />
+        </label>
       </div>
     </div>
   );
