@@ -42,7 +42,7 @@ function App() {
             <ToggleButton />
           </div>
         </section>
-        <section id="cards" className="mt-16">
+        <section id="cards" className="mt-16 mx-4">
           <div
             id="display-controls"
             className="flex flex-col md:flex-row space-y-4 md:space-y-0 items-center md:justify-between mb-8"
@@ -69,17 +69,10 @@ function App() {
               </DisplayControlButton>
             </div>
           </div>
-          <div id="cards">
-            <button onClick={() => setDisplayState(DisplayState.all)}>
-              All
-            </button>
-            <button onClick={() => setDisplayState(DisplayState.active)}>
-              Active
-            </button>
-            <button onClick={() => setDisplayState(DisplayState.inactive)}>
-              Inactive
-            </button>
-
+          <div
+            id="cards"
+            className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          >
             {cards.map((card) => (
               <Card
                 key={card.id}
