@@ -3,14 +3,12 @@ import { CardData } from "./data/CardData";
 import { DisplayState } from "./data/DisplayState";
 import data from "./data/data.json";
 import Card from "./components/Card";
-import { useTheme } from "./ui/hooks/useTheme";
 import { ToggleButton } from "./ui/ToggleButton";
 import { DisplayControlButton } from "./ui/DisplayControlButton";
 
 function App() {
   const [cards, setCards] = useState([]);
   const [displayState, setDisplayState] = useState(DisplayState.all);
-  const { theme, toggleTheme, isDark } = useTheme();
 
   // Read the card data from data.json.
   useEffect(() => {

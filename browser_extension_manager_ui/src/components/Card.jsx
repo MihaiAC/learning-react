@@ -13,12 +13,14 @@ export default function Card({ card, displayState, removeSelf }) {
   }
 
   return (
-    <div className="bg-primary rounded-2xl p-4 border-neutral border shadow-md flex flex-col space-y-4 mx-auto max-w-80 justify-between">
+    <div className="bg-primary rounded-2xl p-4 border-neutral border shadow-md flex flex-col space-y-4 mx-auto max-w-80 justify-between min-h-[13rem]">
       <div className="flex space-x-4">
         <img className="w-16 h-16" src={card.logo} alt={card.name} />
         <div className="flex flex-col space-y-2">
           <h3 className="font-bold text-lg">{card.name}</h3>
-          <p className="text-sm w-3/4">{card.description}</p>
+          <p className="text-sm w-3/4 max-h-20 overflow-hidden text-ellipsis">
+            {card.description}
+          </p>
         </div>
       </div>
 
