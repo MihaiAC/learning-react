@@ -13,7 +13,7 @@ export default function Card({ card, displayState, removeSelf }) {
   }
 
   return (
-    <div className="bg-primary rounded-2xl p-4 border-neutral border shadow-md flex flex-col space-y-4">
+    <div className="bg-primary rounded-2xl p-4 border-neutral border shadow-md flex flex-col space-y-4 mx-auto max-w-80 justify-between">
       <div className="flex space-x-4">
         <img className="w-16 h-16" src={card.logo} alt={card.name} />
         <div className="flex flex-col space-y-2">
@@ -22,8 +22,14 @@ export default function Card({ card, displayState, removeSelf }) {
         </div>
       </div>
 
-      <div className="flex items-center">
-        <button onClick={() => removeSelf()}>Remove</button>
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => removeSelf()}
+          className="bg-primary hover:bg-accent hover:text-primary focus:outline-none focus:ring-2 focus:ring-accent border-neutral border-2 p-2 rounded-full text-sm"
+        >
+          Remove
+        </button>
 
         {/* Plain-Tailwind toggle, thumb as sibling */}
         <label className="relative inline-flex items-center cursor-pointer ml-4">

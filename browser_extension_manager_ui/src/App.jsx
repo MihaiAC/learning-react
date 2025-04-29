@@ -28,8 +28,8 @@ function App() {
   return (
     <div className="min-h-screen w-full gradient-bg">
       <div className="container mx-auto pt-8">
-        <section id="header" className="mx-4">
-          <div className="flex flex-row justify-between w-full bg-primary rounded-xl p-2">
+        <section id="header" className="section-autosize flex justify-center">
+          <div className="flex flex-row justify-between w-full bg-primary rounded-xl p-2 mx-4">
             <div className="flex items-center gap-2">
               <img
                 src="assets/images/logo.svg"
@@ -42,10 +42,10 @@ function App() {
             <ToggleButton />
           </div>
         </section>
-        <section className="mt-16 mx-4">
+        <section className="mt-16 section-autosize">
           <div
             id="display-controls"
-            className="flex flex-col md:flex-row space-y-4 md:space-y-0 items-center md:justify-between mb-8"
+            className="flex flex-col md:flex-row space-y-4 md:space-y-0 items-center md:justify-between mb-8 mx-4"
           >
             <h1 className="font-bold text-3xl">Extensions List</h1>
             <div id="controls-buttons" className="flex gap-3">
