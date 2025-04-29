@@ -6,7 +6,7 @@ export function ToggleButton() {
   return (
     <button
       onClick={toggleTheme}
-      className="btn btn-secondary hover:btn-neutral rounded-lg p-2"
+      className="btn btn-secondary hover:btn-neutral rounded-lg py-2 px-2.5 border-0"
     >
       <img
         src={

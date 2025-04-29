@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="min-h-screen w-full gradient-bg">
       <div className="container mx-auto">
-        <section id="header">
+        <section id="header" className="mx-4">
           <div className="flex flex-row justify-between w-full bg-primary rounded-xl p-2">
             <div className="flex items-center gap-2">
               <img
@@ -42,7 +42,23 @@ function App() {
           </div>
         </section>
         <section id="cards">
-          <div id="display-controls"></div>
+          <div
+            id="display-controls"
+            className="flex items-center justify-between"
+          >
+            <h1>Extensions List</h1>
+            <div id="controls-buttons">
+              <button type="button" className="btn">
+                All
+              </button>
+              <button type="button" className="btn">
+                Active
+              </button>
+              <button type="button" className="btn">
+                Inactive
+              </button>
+            </div>
+          </div>
           <div id="cards">
             <button onClick={() => setDisplayState(DisplayState.all)}>
               All
