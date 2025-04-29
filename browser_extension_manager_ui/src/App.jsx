@@ -5,6 +5,7 @@ import data from "./data/data.json";
 import Card from "./components/Card";
 import { useTheme } from "./ui/hooks/useTheme";
 import { ToggleButton } from "./ui/ToggleButton";
+import { DisplayControlButton } from "./ui/DisplayControlButton";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <div className="min-h-screen w-full gradient-bg">
-      <div className="container mx-auto">
+      <div className="container mx-auto pt-8">
         <section id="header" className="mx-4">
           <div className="flex flex-row justify-between w-full bg-primary rounded-xl p-2">
             <div className="flex items-center gap-2">
@@ -41,22 +42,31 @@ function App() {
             <ToggleButton />
           </div>
         </section>
-        <section id="cards">
+        <section id="cards" className="mt-16">
           <div
             id="display-controls"
-            className="flex items-center justify-between"
+            className="flex flex-col md:flex-row space-y-4 md:space-y-0 items-center md:justify-between mb-8"
           >
-            <h1>Extensions List</h1>
-            <div id="controls-buttons">
-              <button type="button" className="btn">
+            <h1 className="font-bold text-3xl">Extensions List</h1>
+            <div id="controls-buttons" className="flex gap-3">
+              <DisplayControlButton
+                active={displayState === DisplayState.all}
+                onClick={() => setDisplayState(DisplayState.all)}
+              >
                 All
-              </button>
-              <button type="button" className="btn">
+              </DisplayControlButton>
+              <DisplayControlButton
+                active={displayState === DisplayState.active}
+                onClick={() => setDisplayState(DisplayState.active)}
+              >
                 Active
-              </button>
-              <button type="button" className="btn">
+              </DisplayControlButton>
+              <DisplayControlButton
+                active={displayState === DisplayState.inactive}
+                onClick={() => setDisplayState(DisplayState.inactive)}
+              >
                 Inactive
-              </button>
+              </DisplayControlButton>
             </div>
           </div>
           <div id="cards">
