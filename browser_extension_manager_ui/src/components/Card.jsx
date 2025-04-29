@@ -13,7 +13,7 @@ export default function Card({ card, displayState, removeSelf }) {
   }
 
   return (
-    <div className="bg-primary rounded-2xl p-4 border-neutral border shadow-md flex flex-col space-y-4 mx-auto max-w-80 justify-between min-h-[13rem]">
+    <div className="single-card">
       <div className="flex space-x-4">
         <img className="w-16 h-16" src={card.logo} alt={card.name} />
         <div className="flex flex-col space-y-2">
@@ -28,7 +28,7 @@ export default function Card({ card, displayState, removeSelf }) {
         <button
           type="button"
           onClick={() => removeSelf()}
-          className="bg-primary hover:bg-accent hover:text-primary focus:outline-none focus:ring-2 focus:ring-accent border-neutral border-2 p-2 rounded-full text-sm"
+          className="remove-button"
         >
           Remove
         </button>
@@ -44,10 +44,10 @@ export default function Card({ card, displayState, removeSelf }) {
           />
 
           {/* Track */}
-          <div className="w-11 h-6 bg-gray-300 rounded-full transition-colors duration-200 peer-checked:bg-accent peer-focus:ring-2 peer-focus:ring-accent border-2 border-secondary peer-focus:border-2 peer-focus:border-primary" />
+          <div className="toggle-track" />
 
           {/* Thumb */}
-          <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 peer-checked:translate-x-5" />
+          <div className="toggle-thumb" />
         </label>
       </div>
     </div>

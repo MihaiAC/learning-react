@@ -41,10 +41,7 @@ function App() {
           </div>
         </section>
         <section className="mt-16 section-autosize">
-          <div
-            id="display-controls"
-            className="flex flex-col md:flex-row space-y-4 md:space-y-0 items-center md:justify-between mb-8 mx-4"
-          >
+          <div id="display-controls">
             <h1 className="font-bold text-3xl">Extensions List</h1>
             <div id="controls-buttons" className="flex gap-3">
               <DisplayControlButton

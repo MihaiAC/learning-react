@@ -73,6 +73,26 @@
   .section-autosize {
     @apply mx-auto max-w-sm md:grid-cols-2 md:max-w-2xl lg:grid-cols-3 lg:max-w-5xl;
   }
+
+  #display-controls {
+    @apply flex flex-col md:flex-row space-y-4 md:space-y-0 items-center md:justify-between mb-8 mx-4;
+  }
+
+  .single-card {
+    @apply bg-primary rounded-2xl p-4 border-neutral border shadow-md flex flex-col space-y-4 mx-auto max-w-80 justify-between min-h-[13rem];
+  }
+
+  .remove-button {
+    @apply bg-primary hover:bg-accent hover:text-primary focus:outline-none focus:ring-2 focus:ring-accent border-neutral border-2 p-2 rounded-full text-sm;
+  }
+
+  .toggle-track {
+    @apply w-11 h-6 bg-gray-300 rounded-full transition-colors duration-200 peer-checked:bg-accent peer-focus:ring-2 peer-focus:ring-accent border-2 border-secondary peer-focus:border-2 peer-focus:border-primary;
+  }
+
+  .toggle-thumb {
+    @apply absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 peer-checked:translate-x-5;
+  }
 }
 
 /* Font face declaration for variable font files */
