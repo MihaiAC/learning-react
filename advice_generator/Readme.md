@@ -17,3 +17,10 @@ Users should be able to:
 ### Built with
 
 Vite + React + Tailwind CSS.
+
+### What I learned
+
+How to make a blurry shadow effect on hover with Tailwind:
+`hover:shadow-[inset_0_0_1px_hsl(150,100%,66%),0_0_25px_10px_hsl(150,100%,66%)]`
+
+Without the inset trick, there was a weird circular artifact matching the background color that wouldn't go away, even with `outline-none` and `border-0`.
