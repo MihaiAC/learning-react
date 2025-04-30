@@ -9,3 +9,9 @@
   --color-midGray: hsl(217, 19%, 24%);
   --color-darkGray: hsl(218, 23%, 16%);
 }
+
+@layer base {
+  .dice-button {
+    @apply outline-hidden hover:shadow-[inset_0_0_1px_hsl(150,100%,66%),0_0_25px_10px_hsl(150,100%,66%)] bg-hospitalGreen rounded-full p-4 shadow-md hover:cursor-pointer;
+  }
+}
