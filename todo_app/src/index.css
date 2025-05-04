@@ -1,1 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Josefin Sans", sans-serif;
+
+  /* Primary */
+  --color-bright-blue: hsl(220 98% 61%);
+  --color-check-start: hsl(192 100% 67%);
+  --color-check-end: hsl(280 87% 65%);
+
+  /* Light Theme */
+  --color-active-text: hsl(236 9% 61%);
+  --color-inactive-text: hsl(252, 5%, 81%);
+  --color-bg: hsl(240, 12%, 97%);
+  --color-todo-bg: hsl(0, 0%, 100%);
+  --color-hover: hsl(244, 6%, 45%);
+}
+
+@layer base {
+  :root.dark {
+    --color-active-text: hsl(234 39% 85%);
+    --color-inactive-text: hsl(235, 14%, 35%);
+    --color-bg: hsl(240, 19%, 11%);
+    --color-todo-bg: hsl(235, 24%, 19%);
+    --color-hover: hsl(236 33% 92%);
+  }
+}
