@@ -10,19 +10,21 @@
   --color-check-end: hsl(280 87% 65%);
 
   /* Light Theme */
-  --color-active-text: hsl(236 9% 61%);
-  --color-inactive-text: hsl(252, 5%, 81%);
-  --color-bg: hsl(240, 12%, 97%);
-  --color-todo-bg: hsl(0, 0%, 100%);
-  --color-hover: hsl(244, 6%, 45%);
+  --color-activeColor: hsl(235, 24%, 19%);
+  --color-inactiveColor: hsl(252, 5%, 81%);
+  --color-bgColor: hsl(240, 12%, 97%);
+  --color-todo-bgColor: hsl(0, 0%, 100%);
+  --color-hoverColor: hsl(244, 6%, 45%);
+
+  --color-neutralColor: hsl(236 9% 61%);
 }
 
 @layer base {
   :root.dark {
-    --color-active-text: hsl(234 39% 85%);
-    --color-inactive-text: hsl(235, 14%, 35%);
-    --color-bg: hsl(240, 19%, 11%);
-    --color-todo-bg: hsl(235, 24%, 19%);
-    --color-hover: hsl(236 33% 92%);
+    --color-activeColor: hsl(234 39% 85%);
+    --color-inactiveColor: hsl(235, 14%, 35%);
+    --color-bgColor: hsl(240, 19%, 11%);
+    --color-todo-bgColor: hsl(235, 24%, 19%);
+    --color-hoverColor: hsl(236 33% 92%);
   }
 }

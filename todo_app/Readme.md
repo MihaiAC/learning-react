@@ -33,4 +33,7 @@ Vite + Tailwind + React + shadcn/ui + dnd-kit
 
 ### What I learned
 
+- Implementing drag and drop for a list of items with dnd-kit;
+- Importing SVGs as components with vite-plugin-svgr;
+
 ### Useful resources

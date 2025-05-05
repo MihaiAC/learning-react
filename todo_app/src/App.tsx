@@ -15,6 +15,7 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import ThemeToggleButton from "./components/ThemeToggleButton";
 
 export type DisplayMode = "all" | "active" | "completed";
 export type ItemStatus = "active" | "completed";
@@ -73,6 +74,10 @@ function App() {
 
   return (
     <>
+      <div>
+        <h1>TODO</h1>
+        <ThemeToggleButton />
+      </div>
       <AddItem onAdd={addItem}></AddItem>
       <DndContext
         sensors={sensors}
