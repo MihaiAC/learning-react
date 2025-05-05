@@ -73,54 +73,67 @@ function App() {
   }
 
   return (
-    <>
-      <div>
-        <h1>TODO</h1>
-        <ThemeToggleButton />
-      </div>
-      <AddItem onAdd={addItem}></AddItem>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext
-          items={items.map((item) => item.id)}
-          strategy={verticalListSortingStrategy}
+    <div className="w-full h-screen bg-bgColor overflow-hidden relative">
+      {/* Couldn't make bg- stretch only horizontally. */}
+      {/* TODO: Remove plain CSS from index.css as well. Just do 4 absolute images, trying to make bg-work is just painful for no reason. */}
+      {/* <img
+        src="/images/bg-desktop-dark.jpg"
+        alt=""
+        className="absolute top-0 left-0 w-full object-cover z-0"
+      /> */}
+      <div className="relative z-1 container mx-auto flex flex-col items-center max-w-lg bg-image bg-no-repeat bg-size-[100%_200px] sm:bg-size-[100%_300px]">
+        <div className="flex justify-between w-full mt-16 items-center">
+          <h1 className="text-white text-4xl font-bold tracking-[0.5em] ">
+            TODO
+          </h1>
+          <ThemeToggleButton />
+        </div>
+        <AddItem onAdd={addItem}></AddItem>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
         >
-          <ul>
-            {items
-              .filter(
-                (item) => displayMode === "all" || item.status === displayMode
-              )
-              .map((item) => (
-                <ListItem
-                  key={item.id}
-                  item={item}
-                  onRemove={removeItem}
-                  onToggle={toggleItemStatus}
-                ></ListItem>
-              ))}
-          </ul>
-        </SortableContext>
-      </DndContext>
+          <SortableContext
+            items={items.map((item) => item.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <ul>
+              {items
+                .filter(
+                  (item) => displayMode === "all" || item.status === displayMode
+                )
+                .map((item) => (
+                  <ListItem
+                    key={item.id}
+                    item={item}
+                    onRemove={removeItem}
+                    onToggle={toggleItemStatus}
+                  ></ListItem>
+                ))}
+            </ul>
+          </SortableContext>
+        </DndContext>
 
-      <div>
-        <p>{activeCount} items left</p>
         <div>
-          <button onClick={() => setDisplayMode("all")}>All</button>
-          <button onClick={() => setDisplayMode("active")}>Active</button>
-          <button onClick={() => setDisplayMode("completed")}>Completed</button>
+          <p>{activeCount} items left</p>
+          <div>
+            <button onClick={() => setDisplayMode("all")}>All</button>
+            <button onClick={() => setDisplayMode("active")}>Active</button>
+            <button onClick={() => setDisplayMode("completed")}>
+              Completed
+            </button>
+          </div>
+          <div>
+            <button onClick={() => removeCompleted()}>Clear completed</button>
+          </div>
         </div>
+
         <div>
-          <button onClick={() => removeCompleted()}>Clear completed</button>
+          <p>Drag and drop to reorder list</p>
         </div>
       </div>
-
-      <div>
-        <p>Drag and drop to reorder list</p>
-      </div>
-    </>
+    </div>
   );
 }
 

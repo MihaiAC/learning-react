@@ -21,6 +21,8 @@ export default function ThemeToggleButton() {
   }
 
   return (
-    <button onClick={toggleTheme}>{isDark ? <IconSun /> : <IconMoon />}</button>
+    <button className="cursor-pointer" onClick={toggleTheme}>
+      {isDark ? <IconSun /> : <IconMoon />}
+    </button>
   );
 }
