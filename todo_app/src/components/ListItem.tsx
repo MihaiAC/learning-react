@@ -1,5 +1,7 @@
 import clsx from "clsx";
 import { Item } from "../App";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface ListItemProps {
   item: Item;
@@ -8,8 +10,16 @@ interface ListItemProps {
 }
 
 export default function ListItem({ item, onRemove, onToggle }: ListItemProps) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: item.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   return (
-    <li>
+    <li ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div>
         <input
           type="checkbox"

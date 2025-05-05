@@ -1,6 +1,20 @@
 import { useState } from "react";
 import AddItem from "./components/AddItem";
 import ListItem from "./components/ListItem";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 export type DisplayMode = "all" | "active" | "completed";
 export type ItemStatus = "active" | "completed";
@@ -16,6 +30,17 @@ function App() {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("all");
   const [items, setItems] = useState<Item[]>([]);
   const activeCount = items.filter((item) => item.status === "active").length;
+
+  const sensors = useSensors(useSensor(PointerSensor));
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = items.findIndex((item) => item.id === active.id);
+    const newIndex = items.findIndex((item) => item.id === over.id);
+    setItems((items) => arrayMove(items, oldIndex, newIndex));
+  }
 
   function addItem(text: string) {
     setItems((items) => [
@@ -49,20 +74,32 @@ function App() {
   return (
     <>
       <AddItem onAdd={addItem}></AddItem>
-      <ul>
-        {items
-          .filter(
-            (item) => displayMode === "all" || item.status === displayMode
-          )
-          .map((item) => (
-            <ListItem
-              key={item.id}
-              item={item}
-              onRemove={removeItem}
-              onToggle={toggleItemStatus}
-            ></ListItem>
-          ))}
-      </ul>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext
+          items={items.map((item) => item.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <ul>
+            {items
+              .filter(
+                (item) => displayMode === "all" || item.status === displayMode
+              )
+              .map((item) => (
+                <ListItem
+                  key={item.id}
+                  item={item}
+                  onRemove={removeItem}
+                  onToggle={toggleItemStatus}
+                ></ListItem>
+              ))}
+          </ul>
+        </SortableContext>
+      </DndContext>
+
       <div>
         <p>{activeCount} items left</p>
         <div>
@@ -73,6 +110,10 @@ function App() {
         <div>
           <button onClick={() => removeCompleted()}>Clear completed</button>
         </div>
+      </div>
+
+      <div>
+        <p>Drag and drop to reorder list</p>
       </div>
     </>
   );
