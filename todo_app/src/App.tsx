@@ -1,19 +1,79 @@
+import { useState } from "react";
+import AddItem from "./components/AddItem";
+import ListItem from "./components/ListItem";
+
+export type DisplayMode = "all" | "active" | "completed";
+export type ItemStatus = "active" | "completed";
+export type Item = {
+  id: number;
+  text: string;
+  status: ItemStatus;
+};
+
+let MAX_ID = 0;
+
 function App() {
+  const [displayMode, setDisplayMode] = useState<DisplayMode>("all");
+  const [items, setItems] = useState<Item[]>([]);
+  const activeCount = items.filter((item) => item.status === "active").length;
+
+  function addItem(text: string) {
+    setItems((items) => [
+      ...items,
+      { text: text, status: "active", id: MAX_ID },
+    ]);
+    MAX_ID += 1;
+  }
+
+  function removeItem(id: number) {
+    setItems((items) => items.filter((item) => item.id !== id));
+  }
+
+  function toggleItemStatus(id: number) {
+    setItems((items) =>
+      items.map((item) =>
+        item.id !== id
+          ? item
+          : {
+              ...item,
+              status: item.status === "active" ? "completed" : "active",
+            }
+      )
+    );
+  }
+
+  function removeCompleted() {
+    setItems((items) => items.filter((item) => item.status !== "completed"));
+  }
+
   return (
     <>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum nemo
-        at quo molestias, eum fuga. Labore odit expedita error aspernatur
-        molestiae maxime blanditiis repellat officiis deleniti voluptate
-        excepturi commodi quam totam a tenetur asperiores perspiciatis illo
-        illum debitis, saepe delectus accusantium voluptatum eum adipisci! Dolor
-        omnis, veritatis enim ipsa error rerum ex perspiciatis impedit magnam
-        vitae est odit sit nobis, repellat libero non sapiente earum cupiditate!
-        Doloremque libero aliquid neque magni molestias eos ex nisi cum repellat
-        illum dignissimos voluptatem cupiditate, ab consectetur, itaque vel
-        porro sapiente numquam possimus, voluptatum quis. Autem officiis
-        excepturi accusantium iste dolore ipsum ducimus laboriosam?
-      </p>
+      <AddItem onAdd={addItem}></AddItem>
+      <ul>
+        {items
+          .filter(
+            (item) => displayMode === "all" || item.status === displayMode
+          )
+          .map((item) => (
+            <ListItem
+              key={item.id}
+              item={item}
+              onRemove={removeItem}
+              onToggle={toggleItemStatus}
+            ></ListItem>
+          ))}
+      </ul>
+      <div>
+        <p>{activeCount} items left</p>
+        <div>
+          <button onClick={() => setDisplayMode("all")}>All</button>
+          <button onClick={() => setDisplayMode("active")}>Active</button>
+          <button onClick={() => setDisplayMode("completed")}>Completed</button>
+        </div>
+        <div>
+          <button onClick={() => removeCompleted()}>Clear completed</button>
+        </div>
+      </div>
     </>
   );
 }
