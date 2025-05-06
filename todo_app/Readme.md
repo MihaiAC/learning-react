@@ -35,5 +35,14 @@ Vite + Tailwind + React + shadcn/ui + dnd-kit
 
 - Implementing drag and drop for a list of items with dnd-kit;
 - Importing SVGs as components with vite-plugin-svgr;
+- Using local storage to store theme settings and todo items;
+- Selecting the background image based on screen size and current theme;
+- Making dark mode switching actually switch the background image (`@custom-variant dark (&:where(.dark, .dark *));`);
+
+### Notes
+
+Still not happy with stretching on wide screens. In practice, I would like to have a separate background image for them.
 
 ### Useful resources
+
+- [How to make dark mode easier in Tailwind v4, without spamming dark:](https://www.reddit.com/r/tailwindcss/comments/1jvi5ip/how_to_make_dark_mode_easier_in_tailwind_v4/)

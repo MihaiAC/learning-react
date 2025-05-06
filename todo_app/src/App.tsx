@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddItem from "./components/AddItem";
 import ListItem from "./components/ListItem";
+import BackgroundImage from "./components/BackgroundImage";
 import {
   DndContext,
   closestCenter,
@@ -74,13 +75,8 @@ function App() {
 
   return (
     <div className="w-full h-screen bg-bgColor overflow-hidden relative">
-      {/* Couldn't make bg- stretch only horizontally. */}
-      {/* TODO: Remove plain CSS from index.css as well. Just do 4 absolute images, trying to make bg-work is just painful for no reason. */}
-      {/* <img
-        src="/images/bg-desktop-dark.jpg"
-        alt=""
-        className="absolute top-0 left-0 w-full object-cover z-0"
-      /> */}
+      {/* Couldn't make bg- stretch only horizontally. I found some solutions for Tailwind3, but none for Tailwind4. */}
+      <BackgroundImage />
       <div className="relative z-1 container mx-auto flex flex-col items-center max-w-lg bg-image bg-no-repeat bg-size-[100%_200px] sm:bg-size-[100%_300px]">
         <div className="flex justify-between w-full mt-16 items-center">
           <h1 className="text-white text-4xl font-bold tracking-[0.5em] ">

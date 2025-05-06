@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&display=swap");
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: "Josefin Sans", sans-serif;
@@ -27,26 +28,4 @@
     --color-todo-bgColor: hsl(235, 24%, 19%);
     --color-hoverColor: hsl(236 33% 92%);
   }
-}
-
-@layer components {
-  .bg-image {
-    background-image: url("/images/bg-mobile-light.jpg");
-  }
-
-  .dark .bg-image {
-    background-image: url("/images/bg-mobile-dark.jpg");
-  }
-
-  @media (max-width: 640px) {
-    .bg-image {
-      background-image: url("/images/bg-desktop-light.jpg");
-    }
-
-    .dark .bg-image {
-      background-image: url("/images/bg-desktop-dark.jpg");
-    }
-  }
-
-  /* bg-no-repeat  */
 }
