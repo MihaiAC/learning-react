@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddItem from "./components/AddItem";
 import ListItem from "./components/ListItem";
 import BackgroundImage from "./components/BackgroundImage";
@@ -26,12 +26,60 @@ export type Item = {
   status: ItemStatus;
 };
 
-let MAX_ID = 0;
+const LOCAL_STORAGE_ITEMS_KEY = "todo-items";
+const LOCAL_STORAGE_MAX_ID_KEY = "todo-max-id";
 
 function App() {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("all");
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<Item[]>(() => {
+    try {
+      const savedItemsString = localStorage.getItem(LOCAL_STORAGE_ITEMS_KEY);
+      if (savedItemsString) {
+        const savedItems = JSON.parse(savedItemsString);
+        if (Array.isArray(savedItems)) {
+          return savedItems;
+        }
+      }
+    } catch (error) {
+      console.error("Error loading items from localStorage:", error);
+    }
+    return [];
+  });
+
+  const [maxId, setMaxId] = useState(() => {
+    try {
+      const savedMaxIdString = localStorage.getItem(LOCAL_STORAGE_MAX_ID_KEY);
+      if (savedMaxIdString) {
+        const savedMaxId = parseInt(savedMaxIdString, 10);
+        if (!isNaN(savedMaxId)) {
+          return savedMaxId;
+        }
+      }
+    } catch (error) {
+      console.error("Error loading maxId from localStorage:", error);
+    }
+    return 0;
+  });
+
   const activeCount = items.filter((item) => item.status === "active").length;
+
+  // Save items to localStorage whenever items change
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_ITEMS_KEY, JSON.stringify(items));
+    } catch (error) {
+      console.error("Error saving items to localStorage:", error);
+    }
+  }, [items]);
+
+  // Save maxId to localStorage whenever maxId changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_MAX_ID_KEY, maxId.toString());
+    } catch (error) {
+      console.error("Error saving maxId to localStorage:", error);
+    }
+  }, [maxId]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -56,9 +104,9 @@ function App() {
   function addItem(text: string) {
     setItems((items) => [
       ...items,
-      { text: text, status: "active", id: MAX_ID },
+      { text: text, status: "active", id: maxId },
     ]);
-    MAX_ID += 1;
+    setMaxId((id) => id + 1);
   }
 
   function removeItem(id: number) {

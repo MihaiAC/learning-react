@@ -55,6 +55,7 @@ useSensor(PointerSensor, {
 - Making dark mode switching actually switch the background image (`@custom-variant dark (&:where(.dark, .dark *));`);
 - Displaying an element when the parent li element is hovered, on sm+ screens: `sm:[li:hover_&]:block`. The ampersand represents the current element, underscore = space in Tailwind, and li:hover is standard CSS. So this gets translated to `li:hover button`.
 - Using `display: contents` to merge display controls with the final row of the todo list on >=sm screens. This display mode makes the children of an element act as if they are the children of the parent of the element.
+- Lazy initialization from local storage.
 
 ### Notes
 
