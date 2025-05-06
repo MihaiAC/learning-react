@@ -56,7 +56,7 @@ export default function ListItem({ item, onRemove, onToggle }: ListItemProps) {
         </span>
       </div>
       <button
-        className="block sm:hidden sm:[li:hover_&]:block"
+        className="block sm:hidden sm:[li:hover_&]:block cursor-pointer"
         onClick={() => onRemove(item.id)}
       >
         <IconCross />
