@@ -74,7 +74,7 @@ function App() {
   }
 
   return (
-    <div className="w-full h-screen bg-bgColor overflow-hidden relative">
+    <div className="w-full h-screen bg-bgColor overflow-hidden relative px-8">
       {/* Couldn't make bg- stretch only horizontally. I found some solutions for Tailwind3, but none for Tailwind4. */}
       <BackgroundImage />
       <div className="relative z-1 container mx-auto flex flex-col items-center max-w-lg bg-image bg-no-repeat bg-size-[100%_200px] sm:bg-size-[100%_300px]">
