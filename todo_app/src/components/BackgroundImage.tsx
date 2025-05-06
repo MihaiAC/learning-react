@@ -5,14 +5,14 @@ export default function BackgroundImage() {
       <img
         src="/images/bg-mobile-light.jpg"
         alt=""
-        className="block sm:hidden dark:hidden absolute top-0 left-0 w-full h-[200px] object-cover z-0"
+        className="block sm:hidden dark:hidden absolute top-0 left-0 w-full h-[250px] object-cover z-0"
       />
 
       {/* Mobile Dark */}
       <img
         src="/images/bg-mobile-dark.jpg"
         alt=""
-        className="hidden sm:hidden dark:block absolute top-0 left-0 w-full h-[200px] object-cover z-0"
+        className="hidden sm:hidden dark:block absolute top-0 left-0 w-full h-[250px] object-cover z-0"
       />
 
       {/* Desktop Light */}

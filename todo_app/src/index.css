@@ -29,3 +29,13 @@
     --color-hoverColor: hsl(236 33% 92%);
   }
 }
+
+@layer components {
+  .todo-rounded-md {
+    @apply rounded-md sm:rounded-b-none;
+  }
+
+  .display-button {
+    @apply cursor-pointer hover:text-bright-blue;
+  }
+}

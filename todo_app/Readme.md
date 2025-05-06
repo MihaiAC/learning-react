@@ -54,12 +54,15 @@ useSensor(PointerSensor, {
 - Selecting the background image based on screen size and current theme;
 - Making dark mode switching actually switch the background image (`@custom-variant dark (&:where(.dark, .dark *));`);
 - Displaying an element when the parent li element is hovered, on sm+ screens: `sm:[li:hover_&]:block`. The ampersand represents the current element, underscore = space in Tailwind, and li:hover is standard CSS. So this gets translated to `li:hover button`.
+- Using `display: contents` to merge display controls with the final row of the todo list on >=sm screens. This display mode makes the children of an element act as if they are the children of the parent of the element.
 
 ### Notes
 
 Still not happy with stretching on wide screens. In practice, I would like to have a separate background image for them.
 
 Surprisingly, adding a gradient to the checkbox border was not trivial.
+
+The `sm:[li:hover_&]:block` and `display: contents` tricks were pretty neat, especially the latter. It's something I just glossed over when reading display modes, without realising what it can be used for.
 
 ### Useful resources
 
