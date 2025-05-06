@@ -16,7 +16,10 @@ export default function Checkbox({ checked, onToggle, id }: CheckboxProps) {
   };
 
   return (
-    <div className="group relative inline-block" onClick={handleClick}>
+    <div
+      className="group relative inline-block cursor-pointer"
+      onClick={handleClick}
+    >
       {/* Outer element - border effect */}
       <div
         className={clsx(

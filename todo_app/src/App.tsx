@@ -103,7 +103,7 @@ function App() {
             items={items.map((item) => item.id.toString())}
             strategy={verticalListSortingStrategy}
           >
-            <ul>
+            <ul className="bg-todo-bgColor rounded-md shadow-md w-full">
               {items
                 .filter(
                   (item) => displayMode === "all" || item.status === displayMode

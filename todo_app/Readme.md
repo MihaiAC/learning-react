@@ -53,6 +53,7 @@ useSensor(PointerSensor, {
 - Using local storage to store theme settings and todo items;
 - Selecting the background image based on screen size and current theme;
 - Making dark mode switching actually switch the background image (`@custom-variant dark (&:where(.dark, .dark *));`);
+- Displaying an element when the parent li element is hovered, on sm+ screens: `sm:[li:hover_&]:block`. The ampersand represents the current element, underscore = space in Tailwind, and li:hover is standard CSS. So this gets translated to `li:hover button`.
 
 ### Notes
 
