@@ -38,8 +38,6 @@ function App() {
       activationConstraint: {
         // Minimum drag distance
         distance: 10,
-        // Tolerance in pixels before drag starts
-        tolerance: 5,
       },
     })
   );
@@ -48,8 +46,10 @@ function App() {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = items.findIndex((item) => item.id === active.id);
-    const newIndex = items.findIndex((item) => item.id === over.id);
+    const oldIndex = items.findIndex(
+      (item) => item.id.toString() === active.id
+    );
+    const newIndex = items.findIndex((item) => item.id.toString() === over.id);
     setItems((items) => arrayMove(items, oldIndex, newIndex));
   }
 
@@ -100,7 +100,7 @@ function App() {
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={items.map((item) => item.id)}
+            items={items.map((item) => item.id.toString())}
             strategy={verticalListSortingStrategy}
           >
             <ul>

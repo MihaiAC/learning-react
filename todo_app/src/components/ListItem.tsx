@@ -11,7 +11,7 @@ interface ListItemProps {
 
 export default function ListItem({ item, onRemove, onToggle }: ListItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: item.id });
+    useSortable({ id: item.id.toString() });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -19,7 +19,13 @@ export default function ListItem({ item, onRemove, onToggle }: ListItemProps) {
   };
 
   return (
-    <li ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <li
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="flex p-4 bg-todo-bgColor border-2 border-black cursor-move"
+    >
       <div>
         <input
           type="checkbox"
