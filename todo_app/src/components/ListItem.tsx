@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Item } from "../App";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import Checkbox from "./Checkbox";
 
 interface ListItemProps {
   item: Item;
@@ -27,10 +28,10 @@ export default function ListItem({ item, onRemove, onToggle }: ListItemProps) {
       className="flex p-4 bg-todo-bgColor border-2 border-black cursor-move"
     >
       <div>
-        <input
-          type="checkbox"
+        <Checkbox
           checked={item.status === "completed"}
-          onChange={() => onToggle(item.id)}
+          id={item.id}
+          onToggle={onToggle}
         />
       </div>
       <span className={clsx({ "line-through": item.status === "completed" })}>

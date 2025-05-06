@@ -58,6 +58,9 @@ useSensor(PointerSensor, {
 
 Still not happy with stretching on wide screens. In practice, I would like to have a separate background image for them.
 
+Surprisingly, adding a gradient to the checkbox border was not trivial.
+
 ### Useful resources
 
 - [How to make dark mode easier in Tailwind v4, without spamming dark:](https://www.reddit.com/r/tailwindcss/comments/1jvi5ip/how_to_make_dark_mode_easier_in_tailwind_v4/)
+- [How to create gradient borders with TailwindCSS](https://dev.to/tailus/how-to-create-gradient-borders-with-tailwindcss-4gk2)
