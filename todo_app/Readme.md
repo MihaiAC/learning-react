@@ -34,6 +34,21 @@ Vite + Tailwind + React + shadcn/ui + dnd-kit
 ### What I learned
 
 - Implementing drag and drop for a list of items with dnd-kit;
+- Making sure that the checkbox click isn't being treated as a drag and drop event:
+
+```(tsx)
+const sensors = useSensors(
+useSensor(PointerSensor, {
+    activationConstraint: {
+    // Minimum drag distance
+    distance: 10,
+    // Tolerance in pixels before drag starts
+    tolerance: 5,
+    },
+})
+);
+```
+
 - Importing SVGs as components with vite-plugin-svgr;
 - Using local storage to store theme settings and todo items;
 - Selecting the background image based on screen size and current theme;

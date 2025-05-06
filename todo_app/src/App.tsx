@@ -33,7 +33,16 @@ function App() {
   const [items, setItems] = useState<Item[]>([]);
   const activeCount = items.filter((item) => item.status === "active").length;
 
-  const sensors = useSensors(useSensor(PointerSensor));
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        // Minimum drag distance
+        distance: 10,
+        // Tolerance in pixels before drag starts
+        tolerance: 5,
+      },
+    })
+  );
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
