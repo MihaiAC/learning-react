@@ -50,7 +50,7 @@ useSensor(PointerSensor, {
 ```
 
 - Importing SVGs as components with vite-plugin-svgr;
-- Using local storage to store theme settings and todo items;
+- Created a simple REST API backend with Express + Postgres running in a container. Learned to handle CORS. Used React Query on the frontend to handle syncing user operations with the DB and enabled optimistic updates.
 - Selecting the background image based on screen size and current theme;
 - Making dark mode switching actually switch the background image (`@custom-variant dark (&:where(.dark, .dark *));`);
 - Displaying an element when the parent li element is hovered, on sm+ screens: `sm:[li:hover_&]:block`. The ampersand represents the current element, underscore = space in Tailwind, and li:hover is standard CSS. So this gets translated to `li:hover button`.
