@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddItem from "./components/AddItem";
 import ListItem from "./components/ListItem";
 import BackgroundImage from "./components/BackgroundImage";
@@ -10,6 +10,15 @@ import {
   useSensors,
   DragEndEvent,
 } from "@dnd-kit/core";
+
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  createTodo,
+  updateTodo,
+  deleteTodo,
+  deleteCompleted,
+  fetchTodos,
+} from "./apiOps";
 
 import {
   SortableContext,
@@ -26,69 +35,114 @@ export type Item = {
   status: ItemStatus;
 };
 
-const LOCAL_STORAGE_ITEMS_KEY = "todo-items";
-const LOCAL_STORAGE_MAX_ID_KEY = "todo-max-id";
-
 function App() {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("all");
-  const [items, setItems] = useState<Item[]>(() => {
-    try {
-      const savedItemsString = localStorage.getItem(LOCAL_STORAGE_ITEMS_KEY);
-      if (savedItemsString) {
-        const savedItems = JSON.parse(savedItemsString);
-        if (Array.isArray(savedItems)) {
-          return savedItems;
-        }
-      }
-    } catch (error) {
-      console.error("Error loading items from localStorage:", error);
-    }
-    return [];
+  const queryClient = useQueryClient();
+  const { data: items } = useQuery<Item[]>({
+    queryKey: ["todos"],
+    queryFn: fetchTodos,
+    initialData: [],
   });
 
-  const [maxId, setMaxId] = useState(() => {
-    try {
-      const savedMaxIdString = localStorage.getItem(LOCAL_STORAGE_MAX_ID_KEY);
-      if (savedMaxIdString) {
-        const savedMaxId = parseInt(savedMaxIdString, 10);
-        if (!isNaN(savedMaxId)) {
-          return savedMaxId;
-        }
+  const addMutation = useMutation<Item, Error, string, { previous: Item[] }>({
+    mutationFn: createTodo,
+    onMutate: async (text) => {
+      await queryClient.cancelQueries({ queryKey: ["todos"] });
+      const previous = queryClient.getQueryData<Item[]>(["todos"]) || [];
+      const optimistic: Item = { id: Date.now(), text, status: "active" };
+      queryClient.setQueryData(["todos"], [...previous, optimistic]);
+      return { previous };
+    },
+    onError: (_err, _text, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["todos"], context.previous);
       }
-    } catch (error) {
-      console.error("Error loading maxId from localStorage:", error);
-    }
-    return 0;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
   });
 
-  const activeCount = items.filter((item) => item.status === "active").length;
+  const toggleMutation = useMutation<
+    Item,
+    Error,
+    { id: number; status: ItemStatus },
+    { previous: Item[] }
+  >({
+    mutationFn: ({ id, status }) => updateTodo(id, { status }),
+    onMutate: async ({ id, status }) => {
+      await queryClient.cancelQueries({ queryKey: ["todos"] });
+      const previous = queryClient.getQueryData<Item[]>(["todos"]) || [];
+      queryClient.setQueryData(
+        ["todos"],
+        previous.map((t) => (t.id === id ? { ...t, status } : t))
+      );
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["todos"], context.previous);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
 
-  // Save items to localStorage whenever items change
-  useEffect(() => {
-    try {
-      localStorage.setItem(LOCAL_STORAGE_ITEMS_KEY, JSON.stringify(items));
-    } catch (error) {
-      console.error("Error saving items to localStorage:", error);
+  const deleteMutation = useMutation<void, Error, number, { previous: Item[] }>(
+    {
+      mutationFn: deleteTodo,
+      onMutate: async (id) => {
+        await queryClient.cancelQueries({ queryKey: ["todos"] });
+        const previous = queryClient.getQueryData<Item[]>(["todos"]) || [];
+        queryClient.setQueryData(
+          ["todos"],
+          previous.filter((t) => t.id !== id)
+        );
+        return { previous };
+      },
+      onError: (_err, _id, context) => {
+        if (context?.previous) {
+          queryClient.setQueryData(["todos"], context.previous);
+        }
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: ["todos"] });
+      },
     }
-  }, [items]);
+  );
 
-  // Save maxId to localStorage whenever maxId changes
-  useEffect(() => {
-    try {
-      localStorage.setItem(LOCAL_STORAGE_MAX_ID_KEY, maxId.toString());
-    } catch (error) {
-      console.error("Error saving maxId to localStorage:", error);
-    }
-  }, [maxId]);
+  const clearCompletedMutation = useMutation<
+    void,
+    Error,
+    void,
+    { previous: Item[] }
+  >({
+    mutationFn: () => deleteCompleted(),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["todos"] });
+      const previous = queryClient.getQueryData<Item[]>(["todos"]) || [];
+      queryClient.setQueryData(
+        ["todos"],
+        previous.filter((t) => t.status !== "completed")
+      );
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["todos"], context.previous);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        // Minimum drag distance
-        distance: 10,
-      },
-    })
+    useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
   );
+
+  const activeCount = items.filter((item) => item.status === "active").length;
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -98,41 +152,13 @@ function App() {
       (item) => item.id.toString() === active.id
     );
     const newIndex = items.findIndex((item) => item.id.toString() === over.id);
-    setItems((items) => arrayMove(items, oldIndex, newIndex));
-  }
 
-  function addItem(text: string) {
-    setItems((items) => [
-      ...items,
-      { text: text, status: "active", id: maxId },
-    ]);
-    setMaxId((id) => id + 1);
-  }
-
-  function removeItem(id: number) {
-    setItems((items) => items.filter((item) => item.id !== id));
-  }
-
-  function toggleItemStatus(id: number) {
-    setItems((items) =>
-      items.map((item) =>
-        item.id !== id
-          ? item
-          : {
-              ...item,
-              status: item.status === "active" ? "completed" : "active",
-            }
-      )
-    );
-  }
-
-  function removeCompleted() {
-    setItems((items) => items.filter((item) => item.status !== "completed"));
+    const reordered = arrayMove(items, oldIndex, newIndex);
+    queryClient.setQueryData(["todos"], reordered);
   }
 
   return (
     <div className="w-full h-screen bg-bgColor overflow-hidden relative px-8">
-      {/* Couldn't make bg- stretch only horizontally. I found some solutions for Tailwind3, but none for Tailwind4. */}
       <BackgroundImage />
       <div className="relative z-1 container mx-auto flex flex-col items-center max-w-lg bg-image bg-no-repeat">
         <div className="flex justify-between w-full mt-16 items-center">
@@ -141,7 +167,9 @@ function App() {
           </h1>
           <ThemeToggleButton />
         </div>
-        <AddItem onAdd={addItem}></AddItem>
+
+        <AddItem onAdd={(text) => addMutation.mutate(text)} />
+
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
@@ -160,9 +188,19 @@ function App() {
                   <ListItem
                     key={item.id}
                     item={item}
-                    onRemove={removeItem}
-                    onToggle={toggleItemStatus}
-                  ></ListItem>
+                    onRemove={(id) => deleteMutation.mutate(id)}
+                    onToggle={(id) => {
+                      const current = items.find((item) => item.id === id);
+                      if (current)
+                        toggleMutation.mutate({
+                          id,
+                          status:
+                            current.status === "active"
+                              ? "completed"
+                              : "active",
+                        });
+                    }}
+                  />
                 ))}
             </ul>
           </SortableContext>
@@ -175,13 +213,12 @@ function App() {
             </p>
             <button
               className="sm:order-3 text-neutralColor cursor-pointer"
-              onClick={removeCompleted}
+              onClick={() => clearCompletedMutation.mutate()}
             >
               Clear completed
             </button>
           </div>
 
-          {/* Transparent on mobile to show gap */}
           <div className="h-4 bg-transparent sm:hidden" />
 
           <div className="flex justify-center items-center bg-todo-bgColor p-4 sm:contents sm:bg-transparent sm:p-0 rounded-md shadow-md sm:rounded-none sm:shadow-none">
