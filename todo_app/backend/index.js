@@ -1,10 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 
 const app = express();
 const prisma = new PrismaClient();
 
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173" }));
 
 app.get("/api/todos", async (req, res) => {
   const todos = await prisma.todo.findMany({ orderBy: { id: "asc" } });
@@ -32,7 +34,7 @@ app.put("/api/todos/:id", async (req, res) => {
   }
 });
 
-app.delete("api/todos/:id", async (req, res) => {
+app.delete("/api/todos/:id", async (req, res) => {
   const id = parseInt(req.params.id);
   try {
     await prisma.todo.delete({ where: { id } });
