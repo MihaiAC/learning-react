@@ -34,6 +34,16 @@ app.put("/api/todos/:id", async (req, res) => {
   }
 });
 
+app.delete("/api/todos/completed", async (req, res) => {
+  try {
+    await prisma.todo.deleteMany({ where: { status: "completed" } });
+    res.sendStatus(204);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 app.delete("/api/todos/:id", async (req, res) => {
   const id = parseInt(req.params.id);
   try {
@@ -42,16 +52,6 @@ app.delete("/api/todos/:id", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(404);
-  }
-});
-
-app.delete("/api/todos/completed", async (req, res) => {
-  try {
-    await prisma.todo.deleteMany({ where: { status: "completed" } });
-    res.sendStatus(204);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
   }
 });
 
