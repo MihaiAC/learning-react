@@ -1,4 +1,3 @@
-// App.jsx
 import { useMemo } from "react";
 import ImageGallery from "./ImageGallery";
 

@@ -5,36 +5,37 @@ export default function ImageGallery({ images }) {
 
   useEffect(() => {
     const el = scrollRef.current;
-
-    if (!el) return;
-
     const onWheel = (e) => {
-      // Only trigger on large screens
       if (window.innerWidth >= 1024) {
         e.preventDefault();
         el.scrollLeft += e.deltaY;
       }
     };
-
     el.addEventListener("wheel", onWheel, { passive: false });
-
     return () => el.removeEventListener("wheel", onWheel);
   }, []);
 
   return (
     <div
       ref={scrollRef}
-      className="flex flex-col lg:flex-row lg:overflow-x-scroll h-screen w-full"
+      className="
+        flex flex-col
+        lg:flex-row lg:flex-nowrap lg:overflow-x-auto lg:overflow-y-hidden
+        h-screen w-full
+        space-y-16 lg:space-y-0
+        lg:space-x-16
+        p-16
+      "
     >
-      {images.map((src, i) => (
+      {images.map((src, idx) => (
         <div
-          key={i}
-          className="w-full h-screen lg:w-1/2 lg:h-full flex-shrink-0"
+          key={idx}
+          className="w-full lg:w-auto h-auto lg:h-screen flex-shrink-0 flex items-center justify-center shadow-lg"
         >
           <img
             src={src}
-            alt={`rect-${i + 1}`}
-            className="w-full h-full object-cover"
+            alt={`rect-${idx + 1}`}
+            className="w-full lg:w-auto h-auto lg:h-screen  object-contain"
           />
         </div>
       ))}
