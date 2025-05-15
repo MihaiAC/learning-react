@@ -13,3 +13,7 @@ Wanted to recreate the following gallery component (found in a Wordpress templat
 - On right click on an image, the image name should disappear and the image should "turn" 180 and become a blurred version of itself. A custom description should appear in its center. On a second right click, the image returns to its previous behaviour.
 
 - The cursor should be a tiny black point with a tiny transparent circle around it, which follows it around with a small but noticeable lag (deliberate choice).
+
+## Additional features
+
+- Smooth scroll;
