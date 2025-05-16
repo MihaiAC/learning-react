@@ -28,7 +28,7 @@ export default function ImageGallery({ images }) {
         h-screen w-full
         space-y-16 lg:space-y-0
         lg:space-x-16
-        my-16 px-16
+        py-16 px-16
       "
     >
       {images.map((src, idx) => (
