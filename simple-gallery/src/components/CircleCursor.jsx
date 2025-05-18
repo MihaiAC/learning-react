@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
-export default function CircleCursor() {
+// Accept isModalOpen prop
+export default function CircleCursor({ isModalOpen }) {
   const dotRef = useRef(null);
   const grayRingRef = useRef(null);
 
@@ -11,7 +12,6 @@ export default function CircleCursor() {
     const dot = dotRef.current;
     const ring = grayRingRef.current;
 
-    // Null refs.
     if (!dot || !ring) {
       return;
     }
@@ -21,15 +21,12 @@ export default function CircleCursor() {
     let ringX = 0;
     let ringY = 0;
 
-    // Define lerp factor for ring animation
     const LERP_FACTOR = 0.15;
 
     const moveCursor = (event) => {
       targetX = event.clientX;
       targetY = event.clientY;
 
-      // Instantly move the dot to the cursor position
-      // The -translate-x-1/2 -translate-y-1/2 in CSS centers it
       dot.style.left = `${targetX}px`;
       dot.style.top = `${targetY}px`;
     };
@@ -37,19 +34,20 @@ export default function CircleCursor() {
     window.addEventListener("mousemove", moveCursor);
 
     const checkHover = (event) => {
-      const isOverImage = event.target.tagName === "IMG";
-      setIsHoveringImage(isOverImage);
+      // Updated hover detection: check for the data-image-wrapper attribute
+      const isOverImageArea = !!event.target.closest(
+        '[data-image-wrapper="true"]'
+      );
+      setIsHoveringImage(isOverImageArea);
     };
 
     window.addEventListener("mouseover", checkHover);
 
     let animationFrameId;
     function animate() {
-      // Apply LERP for smooth ring movement
       ringX += (targetX - ringX) * LERP_FACTOR;
       ringY += (targetY - ringY) * LERP_FACTOR;
 
-      // Apply transform to center the ring
       ring.style.left = `${ringX}px`;
       ring.style.top = `${ringY}px`;
 
@@ -70,21 +68,27 @@ export default function CircleCursor() {
       <div
         ref={grayRingRef}
         className={clsx(
-          "fixed top-0 left-0 z-40 w-10 h-10 rounded-full border",
+          // Increased z-index to be above modal elements (backdrop z-40, panel z-50)
+          "fixed top-0 left-0 z-[51] w-10 h-10 rounded-full border",
           "pointer-events-none transform -translate-x-1/2 -translate-y-1/2",
           "transition-all duration-200 ease-out",
-          !isHoveringImage
-            ? "border-gray-500 opacity-50 scale-100 bg-transparent"
-            : "border-gray-500 bg-gray-500 opacity-80 scale-150"
+          // Conditional styling based on isModalOpen, then isHoveringImage
+          isModalOpen
+            ? "border-gray-300 bg-gray-300 opacity-80 scale-150"
+            : isHoveringImage
+              ? "border-gray-500 bg-gray-500 opacity-80 scale-150"
+              : "border-gray-500 opacity-50 scale-100 bg-transparent"
         )}
       />
       <div
         ref={dotRef}
         className={clsx(
-          "fixed top-0 left-0 z-50 w-2 h-2 rounded-full bg-black",
+          // Increased z-index to be above modal panel and ring
+          "fixed top-0 left-0 z-[52] w-2 h-2 rounded-full bg-black",
           "pointer-events-none transform -translate-x-1/2 -translate-y-1/2",
           "transition-opacity duration-200 ease-out",
-          { "opacity-0": isHoveringImage }
+          // Dot disappears if hovering image area OR if modal is open
+          { "opacity-0": isHoveringImage || isModalOpen }
         )}
       />
     </>

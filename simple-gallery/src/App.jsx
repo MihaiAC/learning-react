@@ -1,17 +1,41 @@
-import { useMemo } from "react";
-import ImageGallery from "./ImageGallery";
+import { useMemo, useState } from "react";
+import ImageGallery from "./components/ImageGallery";
 import CircleCursor from "./components/CircleCursor";
+import { imageDetailsData } from "./data/imageDetails";
 
 export default function App() {
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const images = useMemo(() => {
-    const modules = import.meta.glob("./assets/*.svg", { eager: true });
-    return Object.values(modules).map((mod) => mod.default);
+    // Import all SVG files from the assets folder
+    const imageModules = import.meta.glob("./assets/*.svg", { eager: true });
+
+    return Object.entries(imageModules).map(([path, module]) => {
+      const filename = path.split("/").pop().replace(".svg", "");
+      const details = imageDetailsData[filename] || {
+        title: `Image ${filename}`,
+        place: "Unknown Place",
+        year: "N/A",
+        explanation: "No description available.",
+      };
+
+      return {
+        id: filename,
+        src: module.default,
+        ...details,
+      };
+    });
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <CircleCursor />
-      <ImageGallery images={images} />
+    <div className="min-h-screen bg-gray-100">
+      {" "}
+      <CircleCursor isModalOpen={!!selectedImage} />
+      <ImageGallery
+        images={images}
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
+      />
     </div>
   );
 }
