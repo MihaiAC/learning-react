@@ -43,7 +43,8 @@ export default function ImageGallery({
     setSelectedImage(image);
   };
 
-  const handleClose = () => {
+  const handleClose = (event) => {
+    event.preventDefault();
     setSelectedImage(null);
   };
 
@@ -105,7 +106,8 @@ export default function ImageGallery({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={handleClose}
+              onClick={(event) => handleClose(event)}
+              onContextMenu={(event) => handleClose(event)}
               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40" // Backdrop z-index: 40
             />
 

@@ -9,6 +9,12 @@ export default function CircleCursor({ isModalOpen }) {
   const [isHoveringImage, setIsHoveringImage] = useState(false);
 
   useEffect(() => {
+    if (!isModalOpen) {
+      setIsHoveringImage(true);
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
     const dot = dotRef.current;
     const ring = grayRingRef.current;
 
