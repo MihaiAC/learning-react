@@ -79,14 +79,19 @@ export default function ImageGallery({
             className="
               w-full lg:w-auto h-auto lg:h-screen flex-shrink-0
               flex items-center justify-center
-              shadow-lg cursor-none
-              group
+              shadow-lg group
+              transition-all duration-300 ease-out
+              hover:shadow-xl
             "
           >
             <img
               src={image.src}
               alt={image.title || `Image ${image.id}`}
-              className="w-full lg:w-auto h-auto lg:h-screen object-contain"
+              className="
+                w-full lg:w-auto h-auto lg:h-screen object-contain
+                transition-transform duration-300 ease-out
+                group-hover:scale-103
+              "
             />
           </div>
         ))}
