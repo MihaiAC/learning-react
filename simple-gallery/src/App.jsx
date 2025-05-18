@@ -7,7 +7,6 @@ export default function App() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const images = useMemo(() => {
-    // Import all SVG files from the assets folder
     const imageModules = import.meta.glob("./assets/*.svg", { eager: true });
 
     return Object.entries(imageModules).map(([path, module]) => {
@@ -28,8 +27,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {" "}
+    <div className="app-wrapper flex flex-col h-full bg-gray-100">
       <CircleCursor isModalOpen={!!selectedImage} />
       <ImageGallery
         images={images}

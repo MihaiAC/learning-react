@@ -65,8 +65,12 @@ export default function ImageGallery({
         ref={scrollRef}
         className="
           flex flex-col
-          lg:flex-row lg:flex-nowrap lg:overflow-x-auto lg:overflow-y-hidden
-          h-screen w-full
+          w-full
+          flex-grow
+          lg:flex-grow-0
+          lg:flex-row lg:flex-nowrap
+          lg:h-screen
+          lg:overflow-x-auto lg:overflow-y-hidden
           space-y-16 lg:space-y-0
           lg:space-x-16
           py-16 px-16
@@ -78,7 +82,9 @@ export default function ImageGallery({
             data-image-wrapper="true" // Added data attribute for hover detection
             onContextMenu={(e) => handleRightClick(e, image)}
             className="
-              w-full lg:w-auto h-auto lg:h-screen flex-shrink-0
+              w-full flex-shrink-0
+              lg:w-auto
+              lg:h-full
               flex items-center justify-center
               shadow-lg group
               transition-all duration-300 ease-out
@@ -89,7 +95,9 @@ export default function ImageGallery({
               src={image.src}
               alt={image.title || `Image ${image.id}`}
               className="
-                w-full lg:w-auto h-auto lg:h-screen object-contain
+                w-full object-contain
+                lg:w-auto
+                lg:h-full
                 transition-transform duration-300 ease-out
                 group-hover:scale-103
               "
