@@ -79,7 +79,8 @@ export default function ImageGallery({
         {images.map((image) => (
           <div
             key={image.id}
-            data-image-wrapper="true" // Added data attribute for hover detection
+            data-image-wrapper="true" // Data attribute for hover detection
+            data-image-title={image.title} // Cursor hover text.
             onContextMenu={(e) => handleRightClick(e, image)}
             className="
               w-full flex-shrink-0

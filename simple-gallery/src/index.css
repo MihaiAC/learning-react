@@ -9,3 +9,35 @@
     cursor: none !important;
   }
 }
+
+@layer utilities {
+  .text-outline-black-css {
+    /* Adjust px values for thickness, and color (#000) as needed */
+    text-shadow:
+      -0.5px -0.5px 0 #000,
+      0.5px -0.5px 0 #000,
+      -0.5px 0.5px 0 #000,
+      0.5px 0.5px 0 #000;
+  }
+
+  .text-outline-black-thick-css {
+    text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000,
+      /* Add more offsets for a thicker "stroke" */ -1.5px 0 0 #000,
+      1.5px 0 0 #000,
+      0 -1.5px 0 #000,
+      0 1.5px 0 #000;
+  }
+
+  /* Example for a white outline on dark text */
+  .text-outline-white-css {
+    text-shadow:
+      -1px -1px 0 #fff,
+      1px -1px 0 #fff,
+      -1px 1px 0 #fff,
+      1px 1px 0 #fff;
+  }
+}
