@@ -17,5 +17,8 @@
 - [**React Complete Guide**](./react_complete_guide/)
   Covers React fundamentals, common libraries (Redux, Router, Query, Motion), and a short Next.js intro.
 
+- [**Next.js streaming + React Suspense tutorial**](./nextjs_streaming_tutorial)
+  Following this [tutorial](https://www.freecodecamp.org/news/the-nextjs-15-streaming-handbook/).
+
 - [**TypeScript Tutorial**](./typescript_tutorial/)
   TypeScript short tutorial.
