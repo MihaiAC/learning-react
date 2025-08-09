@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"; // Forces the page to be rendered on the server.
+
 import ToolsCards from "@/components/tool-cards";
 
 export default function Home() {

@@ -1,5 +1,6 @@
 import CardSkeleton from "@/components/ui/card-skeleton";
 
+// Remove underline from filename for automatic loading.
 export default function Loading() {
   return (
     <div className="w-full min-h-screen flex justify-center items-center bg-black">
