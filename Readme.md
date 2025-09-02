@@ -14,6 +14,9 @@
 - [**React Complete Guide**](./react_complete_guide/)
   Covers React fundamentals, common libraries (Redux, Router, Query, Motion), and a short Next.js intro.
 
+- [**Simple form with RHF and Zod**](./rhf-zod-form/)
+  Simple form with React Hook Form + validation with Zod.
+
 - [**Simple Gallery**](./simple-gallery/)
   Responsive gallery component, adapted from a Wordpress plugin as a proof of concept for a client.
 
