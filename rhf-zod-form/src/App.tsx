@@ -1,30 +1,47 @@
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type PetEnum = "dog" | "cat" | "other";
+const formSchema = z.object({
+  firstName: z.string().min(2, { message: "Must be at least 2 characters" }),
+  favoritePet: z.enum(["dog", "cat", "other"]),
+  password: z
+    .string()
+    .min(8, "At least 8 characters")
+    .regex(/\d/, "Must include at least one number"),
+  email: z.email(),
+  telephone: z
+    .string()
+    .regex(
+      /^[+]?[(]?[0-9]{1,4}[)]?[-\s0-9]{5,}$/u,
+      "Enter a valid phone number"
+    ),
+  url: z.url(),
+  digit: z.int().min(1, "Must be at least 1").max(9, "Must be at most 9"),
+  negativeNumber: z.number().negative(),
+  date: z.iso.date().refine((v) => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+    return v <= todayStr;
+  }, "Date cannot be in the future"),
+  color: z.string().regex(/^#([0-9A-Fa-f]{6})$/, "Please pick a color"),
+  textArea: z.string().min(10, "Please write at least 10 characters"),
+});
 
-interface IFormInput {
-  firstName: string;
-  favoritePet: PetEnum;
-  password: string;
-  email: string;
-  telephone: string;
-  url: string;
-  digit: number;
-  negativeNumber: number;
-  date: string;
-  color: string;
-  textArea: string;
-}
+type FormValues = z.infer<typeof formSchema>;
 
 export default function App() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<FormValues>({ resolver: zodResolver(formSchema) });
 
   // Print data to console on successful submit.
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const onSubmit = (data: FormValues) => console.log(data);
   return (
     <div className="flex flex-col space-y-6 items-center h-screen bg-slate-700 text-white my-16">
       <h1 className="text-2xl font-bold">React Hook Form + Zod Form</h1>
@@ -37,10 +54,7 @@ export default function App() {
           <input
             id="firstName"
             type="text"
-            {...register("firstName", {
-              required: "First name is required",
-              minLength: { value: 2, message: "Must be at least 2 characters" },
-            })}
+            {...register("firstName")}
             aria-invalid={errors.firstName ? "true" : "false"}
             aria-describedby={errors.firstName ? "firstName-error" : undefined}
             className="bg-white p-1 rounded-md text-black"
@@ -60,10 +74,7 @@ export default function App() {
           <label htmlFor="favoritePet">Favorite Pet</label>
           <select
             id="favoritePet"
-            {...register("favoritePet", {
-              validate: (v) =>
-                v !== "other" ? true : "Please choose Dog or Cat",
-            })}
+            {...register("favoritePet")}
             aria-invalid={errors.favoritePet ? "true" : "false"}
             aria-describedby={
               errors.favoritePet ? "favoritePet-error" : undefined
@@ -90,14 +101,7 @@ export default function App() {
           <input
             id="password"
             type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: { value: 8, message: "At least 8 characters" },
-              pattern: {
-                value: /^(?=.*\d).+$/,
-                message: "Must include at least one number",
-              },
-            })}
+            {...register("password")}
             aria-invalid={errors.password ? "true" : "false"}
             aria-describedby={errors.password ? "password-error" : undefined}
             className="bg-white text-black p-1 rounded-md"
@@ -118,13 +122,7 @@ export default function App() {
           <input
             id="email"
             type="email"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Enter a valid email address",
-              },
-            })}
+            {...register("email")}
             aria-invalid={errors.email ? "true" : "false"}
             aria-describedby={errors.email ? "email-error" : undefined}
             className="bg-white text-black p-1 rounded-md"
@@ -145,13 +143,7 @@ export default function App() {
           <input
             id="telephone"
             type="tel"
-            {...register("telephone", {
-              required: "Phone number is required",
-              pattern: {
-                value: /^[+]?[(]?[0-9]{1,4}[)]?[-\s0-9]{5,}$/,
-                message: "Enter a valid phone number",
-              },
-            })}
+            {...register("telephone")}
             aria-invalid={errors.telephone ? "true" : "false"}
             aria-describedby={errors.telephone ? "telephone-error" : undefined}
             className="bg-white text-black p-1 rounded-md"
@@ -172,13 +164,7 @@ export default function App() {
           <input
             id="url"
             type="url"
-            {...register("url", {
-              required: "URL is required",
-              pattern: {
-                value: /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w-./?%&=]*)?$/i,
-                message: "Enter a valid URL",
-              },
-            })}
+            {...register("url")}
             aria-invalid={errors.url ? "true" : "false"}
             aria-describedby={errors.url ? "url-error" : undefined}
             className="bg-white text-black p-1 rounded-md"
@@ -199,14 +185,7 @@ export default function App() {
           <input
             id="digit"
             type="number"
-            {...register("digit", {
-              valueAsNumber: true,
-              required: "A number is required",
-              min: { value: 1, message: "Must be at least 1" },
-              max: { value: 9, message: "Must be at most 9" },
-              validate: (v) =>
-                Number.isInteger(v) ? true : "Must be an integer",
-            })}
+            {...register("digit", { valueAsNumber: true })}
             aria-invalid={errors.digit ? "true" : "false"}
             aria-describedby={errors.digit ? "digit-error" : undefined}
             className="bg-white text-black p-1 rounded-md"
@@ -227,11 +206,7 @@ export default function App() {
           <input
             id="negativeNumber"
             type="number"
-            {...register("negativeNumber", {
-              valueAsNumber: true,
-              required: "A negative number is required",
-              max: { value: -1, message: "Must be negative" },
-            })}
+            {...register("negativeNumber", { valueAsNumber: true })}
             aria-invalid={errors.negativeNumber ? "true" : "false"}
             aria-describedby={
               errors.negativeNumber ? "negativeNumber-error" : undefined
@@ -254,17 +229,7 @@ export default function App() {
           <input
             id="date"
             type="date"
-            {...register("date", {
-              required: "Date is required",
-              validate: (v) => {
-                const today = new Date();
-                const d = new Date(v);
-                // clear time for comparison
-                today.setHours(0, 0, 0, 0);
-                d.setHours(0, 0, 0, 0);
-                return d <= today || "Date cannot be in the future";
-              },
-            })}
+            {...register("date")}
             aria-invalid={errors.date ? "true" : "false"}
             aria-describedby={errors.date ? "date-error" : undefined}
             className="bg-white text-black p-1 rounded-md"
@@ -285,7 +250,7 @@ export default function App() {
           <input
             id="color"
             type="color"
-            {...register("color", { required: "Color is required" })}
+            {...register("color")}
             aria-invalid={errors.color ? "true" : "false"}
             aria-describedby={errors.color ? "color-error" : undefined}
             className="bg-white text-black p-1 rounded-md"
@@ -305,13 +270,7 @@ export default function App() {
           <label htmlFor="textArea">Type something in here</label>
           <textarea
             id="textArea"
-            {...register("textArea", {
-              required: "This field is required",
-              minLength: {
-                value: 10,
-                message: "Please write at least 10 characters",
-              },
-            })}
+            {...register("textArea")}
             aria-invalid={errors.textArea ? "true" : "false"}
             aria-describedby={errors.textArea ? "textArea-error" : undefined}
             className="bg-white text-black p-1 rounded-md"
